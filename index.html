@@ -414,28 +414,82 @@
     </section>
 
     <section id="contact" class="py-24 px-4 max-w-3xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4 reveal text-center">Get In Touch</h2>
-        <p class="text-center text-slate-400 mb-12 reveal">Have a project, opportunity, or query? I'd love to hear from you.</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-4 reveal text-center">Get In Touch</h2>
+    <p class="text-center text-slate-400 mb-12 reveal">
+        Have a project, opportunity, or query? I'd love to hear from you.
+    </p>
 
-        <form class="reveal space-y-6 bg-slate-800/30 p-8 rounded-2xl border border-slate-700 backdrop-blur-sm">
-            <div class="relative">
-                <input type="text" id="name" class="floating-input block px-4 py-3 w-full text-sm text-white bg-slate-900 rounded-lg border border-slate-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 peer placeholder-transparent" placeholder="Name" required>
-                <label for="name" class="absolute text-sm text-slate-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-900 px-2 peer-focus:px-2 peer-focus:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-3">Your Name</label>
-            </div>
-            
-            <div class="relative">
-                <input type="email" id="email" class="floating-input block px-4 py-3 w-full text-sm text-white bg-slate-900 rounded-lg border border-slate-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 peer placeholder-transparent" placeholder="Email" required>
-                <label for="email" class="absolute text-sm text-slate-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-900 px-2 peer-focus:px-2 peer-focus:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-3">Email Address</label>
-            </div>
+    <form 
+        action="https://formsubmit.co/sanjeevijesh@gmail.com" 
+        method="POST"
+        class="reveal space-y-6 bg-slate-800/30 p-8 rounded-2xl border border-slate-700 backdrop-blur-sm"
+    >
 
-            <div class="relative">
-                <textarea id="message" rows="4" class="floating-input block px-4 py-3 w-full text-sm text-white bg-slate-900 rounded-lg border border-slate-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 peer placeholder-transparent" placeholder="Message" required></textarea>
-                <label for="message" class="absolute text-sm text-slate-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-900 px-2 peer-focus:px-2 peer-focus:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-6 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-3">Your Message</label>
-            </div>
+        <!-- Hidden Config -->
+        <input type="hidden" name="_next" value="thank-you.html">
+        <input type="hidden" name="_subject" value="New Contact from Portfolio">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
 
-            <button type="button" class="hover-trigger w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/20">Send Message</button>
-        </form>
-    </section>
+
+        <!-- Name -->
+        <div class="relative">
+            <input 
+                type="text" 
+                name="name"
+                id="name"
+                class="floating-input block px-4 py-3 w-full text-sm text-white bg-slate-900 rounded-lg border border-slate-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 peer placeholder-transparent"
+                placeholder="Name"
+                required
+            >
+            <label for="name"
+                class="absolute text-sm text-slate-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-900 px-2 peer-focus:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 left-3">
+                Your Name
+            </label>
+        </div>
+
+        <!-- Email -->
+        <div class="relative">
+            <input 
+                type="email" 
+                name="email"
+                id="email"
+                class="floating-input block px-4 py-3 w-full text-sm text-white bg-slate-900 rounded-lg border border-slate-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 peer placeholder-transparent"
+                placeholder="Email"
+                required
+            >
+            <label for="email"
+                class="absolute text-sm text-slate-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-900 px-2 peer-focus:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 left-3">
+                Email Address
+            </label>
+        </div>
+
+        <!-- Message -->
+        <div class="relative">
+            <textarea 
+                name="message"
+                id="message"
+                rows="4"
+                class="floating-input block px-4 py-3 w-full text-sm text-white bg-slate-900 rounded-lg border border-slate-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 peer placeholder-transparent"
+                placeholder="Message"
+                required
+            ></textarea>
+            <label for="message"
+                class="absolute text-sm text-slate-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-900 px-2 peer-focus:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 left-3">
+                Your Message
+            </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+            type="submit"
+            class="hover-trigger w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/20"
+        >
+            Send Message
+        </button>
+    </form>
+</section>
+
 
     <footer class="py-8 text-center border-t border-slate-800 text-slate-500 text-sm">
         <p>&copy; 2025 Sanjeev Narayan M. All Rights Reserved.</p>
