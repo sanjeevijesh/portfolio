@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjeev Narayan M | R&D Engineer</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#1e293b', 
+                            900: '#0f172a', // Deep Charcoal
+                            950: '#020617',
+                        },
+                        indigo: {
+                            500: '#6366f1', // Electric Indigo
+                            600: '#4f46e5',
+                        },
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'blob': 'blob 7s infinite',
+                        'typewriter': 'typewriter 4s steps(40) 1s 1 normal both, blinkTextCursor 500ms steps(40) infinite normal'
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        typewriter: {
+                            'from': { width: '0' },
+                            'to': { width: '100%' }
+                        },
+                        blinkTextCursor: {
+                            'from': { borderRightColor: 'rgba(99, 102, 241, 0.75)' },
+                            'to': { borderRightColor: 'transparent' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- Custom CSS --- */
+        :root {
+            --cursor-size: 20px;
+            --cursor-hover-size: 80px;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+            cursor: none; /* Hide default cursor */
+        }
+
+        /* Custom Cursor */
+        #cursor-blob {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            background: rgba(99, 102, 241, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s;
+            mix-blend-mode: difference;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+
+        #cursor-blob.hovered {
+            width: var(--cursor-hover-size);
+            height: var(--cursor-hover-size);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(2px);
+            mix-blend-mode: normal;
+        }
+
+        /* Glassmorphism Nav */
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Floating Label Logic */
+        .floating-input:focus ~ label,
+        .floating-input:not(:placeholder-shown) ~ label {
+            top: -0.75rem;
+            left: 0.5rem;
+            font-size: 0.75rem;
+            color: #6366f1;
+            background-color: #0f172a;
+            padding: 0 0.25rem;
+        }
+
+        /* 3D Tilt Wrapper */
+        .tilt-card {
+            transition: transform 0.1s;
+            transform-style: preserve-3d;
+        }
+
+        /* REVERTED: Linear Gradient Mask (Better for standing portraits) */
+        .hero-image-mask {
+            -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+        }
+
+        /* 3D Photo Effect */
+        .photo-container {
+            perspective: 1000px;
+        }
+        .photo-inner {
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out;
+        }
+        
+        /* Back to top visibility */
+        #backToTop {
+            transition: opacity 0.4s, transform 0.4s;
+        }
+        .hidden-btn {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+        }
+        .show-btn {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-indigo-500 selection:text-white">
+
+    <div id="cursor-blob"></div>
+
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-2xl font-bold tracking-tighter hover-trigger">
+                        Portfolio<span class="text-indigo-500">.</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#about" class="hover-trigger text-sm font-medium text-slate-300 hover:text-indigo-400 transition-colors">About</a>
+                        <a href="#skills" class="hover-trigger text-sm font-medium text-slate-300 hover:text-indigo-400 transition-colors">Skills</a>
+                        <a href="#work" class="hover-trigger text-sm font-medium text-slate-300 hover:text-indigo-400 transition-colors">Projects</a>
+                        <a href="#contact" class="hover-trigger px-4 py-2 rounded-full border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white transition-all text-sm font-medium">Let's Talk</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="min-h-screen flex items-center justify-center relative px-4 overflow-hidden pt-20">
+        <div class="absolute top-0 -left-4 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+        <div class="absolute top-0 -right-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10 w-full">
+            
+            <div class="text-left reveal active">
+                <h2 class="text-indigo-500 font-semibold tracking-wide uppercase mb-4 text-sm md:text-base">Portfolio 2025</h2>
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight text-white">
+                    Hi, I'm <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Sanjeev Narayan M</span>.
+                </h1>
+                
+                <div class="max-w-fit mb-8">
+                    <p class="text-xl md:text-2xl text-slate-400 font-light border-r-4 border-indigo-500 pr-2 whitespace-nowrap overflow-hidden animate-typewriter">
+                        R&D Engineer & Full-Stack Developer
+                    </p>
+                </div>
+
+                <p class="text-lg text-slate-400 max-w-lg mb-10 font-light leading-relaxed">
+                    Specialized in <span class="text-slate-200 font-medium">Quality Assurance</span>, <span class="text-slate-200 font-medium">DevOps</span>, and building scalable systems at <span class="text-slate-200 font-medium">National Engineering College</span>.
+                </p>
+                
+                <div class="flex gap-4">
+                    <a href="#work" class="hover-trigger bg-indigo-600 text-white px-8 py-3 rounded-full font-medium hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/30 transform hover:-translate-y-1">View Work</a>
+                    <a href="#contact" class="hover-trigger border border-slate-600 text-slate-300 px-8 py-3 rounded-full font-medium hover:border-white hover:text-white transition-all transform hover:-translate-y-1">Contact Me</a>
+                </div>
+            </div>
+
+            <div class="relative flex justify-center items-center photo-container reveal active" id="heroPhoto">
+                <div class="absolute w-[300px] h-[400px] bg-indigo-600/30 rounded-full blur-[80px] -z-10"></div>
+                
+                <div class="photo-inner relative w-[950px] md:w-[950px] tilt-card group">
+                    <img src="mypic.jpeg" 
+                         alt="Sanjeev Narayan M" 
+                         class="w-full h-auto object-cover hero-image-mask drop-shadow-2xl transition-transform duration-300 group-hover:scale-105">
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-6 animate-bounce-slow opacity-70">
+            <p class="text-xs tracking-[0.3em] uppercase mb-2 text-slate-500 text-center">Scroll</p>
+            <div class="w-[1px] h-12 bg-gradient-to-b from-indigo-500 to-transparent mx-auto"></div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 px-4 bg-slate-800/30">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <div class="reveal">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 border-l-4 border-indigo-500 pl-4">About Me</h2>
+                    <div class="space-y-4 text-slate-300 leading-relaxed text-lg">
+                        <p>
+                            Hello! I’m <strong class="text-white">Sanjeev Narayan M</strong>, an R&D Engineer specializing in Quality Assurance & Testing, System Administration, and Full-Stack Development.
+                        </p>
+                        <p>
+                            I recently completed a <strong class="text-indigo-400">6-month internship at Synnoviq Technologies</strong>, where I worked as an R&D Engineer. During this time, I contributed across the entire software lifecycle, including testing, development, and critical infrastructure support.
+                        </p>
+                        <p>
+                            My technical expertise spans programming languages such as <strong class="text-white">Java, Python, and JavaScript</strong>, along with strong experience in manual and automation testing using tools like <strong class="text-white">Selenium</strong>. I am also proficient in DevOps and system administration, working with Linux environments, Git, Docker, and CI/CD pipelines to support stable and efficient software delivery.
+                        </p>
+                        <p>
+                            On the development side, I have hands-on experience building web and mobile applications using frameworks such as <strong class="text-white">React and Flutter</strong>, enabling me to collaborate effectively across both frontend and backend workflows.
+                        </p>
+                        <p class="italic text-slate-400 border-l-2 border-slate-600 pl-4 mt-4">
+                            "I am a problem solver by mindset and quality-focused by approach. My goal is to build reliable, scalable, and user-centric software systems that deliver real value."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reveal">
+                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700 relative overflow-hidden group hover:border-indigo-500/50 transition-colors">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fas fa-briefcase text-9xl"></i>
+                        </div>
+                        
+                        <h3 class="text-xs font-bold tracking-wider text-indigo-500 uppercase mb-2">Latest Experience</h3>
+                        <h2 class="text-2xl font-bold text-white mb-1">R&D Engineer Intern</h2>
+                        <p class="text-lg text-slate-400 mb-6">Synnoviq Technologies</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-500/20 flex items-center justify-center mt-0.5 border border-indigo-500/50">
+                                    <i class="fas fa-check text-xs text-indigo-400"></i>
+                                </div>
+                                <p class="ml-4 text-slate-300 text-sm">Contributed to Testing, Development, and Infrastructure support.</p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-500/20 flex items-center justify-center mt-0.5 border border-indigo-500/50">
+                                    <i class="fas fa-check text-xs text-indigo-400"></i>
+                                </div>
+                                <p class="ml-4 text-slate-300 text-sm">Implemented Automation Testing utilizing Selenium.</p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-500/20 flex items-center justify-center mt-0.5 border border-indigo-500/50">
+                                    <i class="fas fa-check text-xs text-indigo-400"></i>
+                                </div>
+                                <p class="ml-4 text-slate-300 text-sm">Managed Linux environments and CI/CD pipelines.</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-slate-700 flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-xs font-medium text-slate-300">6 Months</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-xs font-medium text-slate-300">Kovilpatti</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-24 px-4 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 reveal border-l-4 border-indigo-500 pl-4">Technical Proficiency</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[150px]">
+                
+                <div class="reveal md:col-span-2 row-span-2 bg-slate-800 border border-slate-700 rounded-2xl p-8 hover:border-indigo-500/50 transition-colors group">
+                    <div class="h-full flex flex-col justify-between">
+                        <div class="flex gap-4">
+                            <i class="fab fa-java text-5xl text-indigo-500 group-hover:scale-110 transition-transform"></i>
+                            <i class="fab fa-python text-5xl text-indigo-500 group-hover:scale-110 transition-transform delay-75"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Core Development</h3>
+                            <p class="text-slate-400">Strong foundation in Java, Python, and JavaScript for robust backend logic and scripting.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal md:col-span-1 row-span-1 bg-slate-800 border border-slate-700 rounded-2xl p-6 flex flex-col justify-center hover:border-indigo-500/50 transition-colors">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fas fa-vial text-indigo-400"></i> QA & Testing</h3>
+                    <p class="text-slate-400 text-sm mt-2">Manual & Automation (Selenium)</p>
+                </div>
+
+                <div class="reveal md:col-span-1 row-span-1 bg-slate-800 border border-slate-700 rounded-2xl p-6 flex flex-col justify-center hover:border-indigo-500/50 transition-colors">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fas fa-server text-indigo-400"></i> DevOps</h3>
+                    <p class="text-slate-400 text-sm mt-2">Linux, Docker, CI/CD</p>
+                </div>
+
+                <div class="reveal md:col-span-1 row-span-2 bg-gradient-to-br from-indigo-900 to-slate-800 border border-slate-700 rounded-2xl p-6 hover:border-indigo-500/50 transition-colors">
+                    <h3 class="text-lg font-bold mb-4">Frameworks</h3>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-center gap-2"><i class="fab fa-react text-indigo-400"></i> React.js</li>
+                        <li class="flex items-center gap-2"><i class="fab fa-android text-indigo-400"></i> Flutter</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-database text-indigo-400"></i> MySQL</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-leaf text-indigo-400"></i> MongoDB</li>
+                    </ul>
+                </div>
+
+                <div class="reveal md:col-span-1 row-span-1 bg-slate-800 border border-slate-700 rounded-2xl p-6 flex items-center justify-between hover:border-indigo-500/50 transition-colors">
+                    <span class="font-bold text-lg">Git & GitHub</span>
+                    <i class="fab fa-git-alt text-3xl text-slate-400"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" class="py-24 px-4 max-w-7xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-16 reveal border-l-4 border-indigo-500 pl-4 uppercase tracking-wider">PROJECTS</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="card-container reveal group perspective-1000">
+                <div class="tilt-card relative w-full bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300">
+                    <div class="h-48 bg-slate-700 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1000&auto=format&fit=crop" alt="AI Fitness Tracker" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-transparent transition-all"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-3">
+                            <span class="text-xs font-semibold bg-indigo-500/10 text-indigo-400 px-2 py-1 rounded">AI/ML</span>
+                            <span class="text-xs font-semibold bg-indigo-500/10 text-indigo-400 px-2 py-1 rounded">ChatBot</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-indigo-400 transition-colors">AI Fitness Tracker</h3>
+                        <p class="text-slate-400 text-sm mb-4">Smart health monitor with AI workout recommendations, interactive ChatBot, and predictive analytics.</p>
+                        <a href="#" class="hover-trigger inline-flex items-center text-sm font-semibold text-white hover:underline decoration-indigo-500 underline-offset-4">
+                            View Case Study <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container reveal group perspective-1000">
+                <div class="tilt-card relative w-full bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300">
+                    <div class="h-48 bg-slate-700 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop" alt="Invoice Generator" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-transparent transition-all"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-3">
+                            <span class="text-xs font-semibold bg-indigo-500/10 text-indigo-400 px-2 py-1 rounded">React</span>
+                            <span class="text-xs font-semibold bg-indigo-500/10 text-indigo-400 px-2 py-1 rounded">Automation</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-indigo-400 transition-colors">Invoice Generator</h3>
+                        <p class="text-slate-400 text-sm mb-4">A streamlined financial tool for generating, managing, and exporting professional invoices instantly.</p>
+                        <a href="#" class="hover-trigger inline-flex items-center text-sm font-semibold text-white hover:underline decoration-indigo-500 underline-offset-4">
+                            View Case Study <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+             <div class="card-container reveal group perspective-1000">
+                <div class="tilt-card relative w-full bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300">
+                    <div class="h-48 bg-slate-700 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=1000&auto=format&fit=crop" alt="Safe Exam Browser" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-transparent transition-all"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-2 mb-3">
+                            <span class="text-xs font-semibold bg-indigo-500/10 text-indigo-400 px-2 py-1 rounded">Security</span>
+                            <span class="text-xs font-semibold bg-indigo-500/10 text-indigo-400 px-2 py-1 rounded">System</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-indigo-400 transition-colors">Safe Exam Browser</h3>
+                        <p class="text-slate-400 text-sm mb-4">Secure assessment environment that locks system functions to prevent academic dishonesty during exams.</p>
+                        <a href="#" class="hover-trigger inline-flex items-center text-sm font-semibold text-white hover:underline decoration-indigo-500 underline-offset-4">
+                            View Case Study <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 px-4 max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 reveal text-center">Get In Touch</h2>
+        <p class="text-center text-slate-400 mb-12 reveal">Have a project, opportunity, or query? I'd love to hear from you.</p>
+
+        <form class="reveal space-y-6 bg-slate-800/30 p-8 rounded-2xl border border-slate-700 backdrop-blur-sm">
+            <div class="relative">
+                <input type="text" id="name" class="floating-input block px-4 py-3 w-full text-sm text-white bg-slate-900 rounded-lg border border-slate-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 peer placeholder-transparent" placeholder="Name" required>
+                <label for="name" class="absolute text-sm text-slate-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-900 px-2 peer-focus:px-2 peer-focus:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-3">Your Name</label>
+            </div>
+            
+            <div class="relative">
+                <input type="email" id="email" class="floating-input block px-4 py-3 w-full text-sm text-white bg-slate-900 rounded-lg border border-slate-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 peer placeholder-transparent" placeholder="Email" required>
+                <label for="email" class="absolute text-sm text-slate-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-900 px-2 peer-focus:px-2 peer-focus:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-3">Email Address</label>
+            </div>
+
+            <div class="relative">
+                <textarea id="message" rows="4" class="floating-input block px-4 py-3 w-full text-sm text-white bg-slate-900 rounded-lg border border-slate-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 peer placeholder-transparent" placeholder="Message" required></textarea>
+                <label for="message" class="absolute text-sm text-slate-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-900 px-2 peer-focus:px-2 peer-focus:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-6 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-3">Your Message</label>
+            </div>
+
+            <button type="button" class="hover-trigger w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/20">Send Message</button>
+        </form>
+    </section>
+
+    <footer class="py-8 text-center border-t border-slate-800 text-slate-500 text-sm">
+        <p>&copy; 2025 Sanjeev Narayan M. All Rights Reserved.</p>
+    </footer>
+
+    <button id="backToTop" class="hidden-btn hover-trigger fixed bottom-8 right-8 bg-indigo-600 text-white p-4 rounded-full shadow-lg hover:bg-indigo-700 z-40">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Custom Cursor
+            const cursor = document.getElementById('cursor-blob');
+            const hoverTriggers = document.querySelectorAll('.hover-trigger');
+
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            hoverTriggers.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+            });
+
+            // 2. Hero Photo 3D Tilt
+            const heroContainer = document.getElementById('heroPhoto');
+            const heroInner = heroContainer.querySelector('.photo-inner');
+
+            heroContainer.addEventListener('mousemove', (e) => {
+                const rect = heroContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const xRotate = ((y - rect.height / 2) / rect.height) * -15; 
+                const yRotate = ((x - rect.width / 2) / rect.width) * 15;
+
+                heroInner.style.transform = `rotateX(${xRotate}deg) rotateY(${yRotate}deg)`;
+            });
+
+            heroContainer.addEventListener('mouseleave', () => {
+                heroInner.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            });
+
+            // 3. Scroll Reveal
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // 4. Project Card Tilt
+            const cards = document.querySelectorAll('.card-container');
+
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = ((y - centerY) / centerY) * -5;
+                    const rotateY = ((x - centerX) / centerX) * 5;
+
+                    const inner = card.querySelector('.tilt-card');
+                    inner.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    const inner = card.querySelector('.tilt-card');
+                    inner.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
+                });
+            });
+
+            // 5. Back to Top Button
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 500) {
+                    backToTopBtn.classList.remove('hidden-btn');
+                    backToTopBtn.classList.add('show-btn');
+                } else {
+                    backToTopBtn.classList.remove('show-btn');
+                    backToTopBtn.classList.add('hidden-btn');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
