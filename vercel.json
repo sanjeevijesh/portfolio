@@ -1,9 +1,12 @@
 {
-  "redirects": [
+  "rewrites": [
     {
       "source": "/skillsyncAi",
-      "destination": "https://skill-sync-ai-sanjeev.vercel.app",
-      "permanent": false
+      "destination": "https://skill-sync-ai-sanjeev.vercel.app"
+    },
+    {
+      "source": "/NearbyRental",
+      "destination": "https://www.sanjeevijesh.website"
     }
   ]
 }
