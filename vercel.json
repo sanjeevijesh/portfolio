@@ -5,8 +5,8 @@
       "destination": "https://skill-sync-ai-sanjeev.vercel.app"
     },
     {
-      "source": "/NearbyRental",
-      "destination": "https://www.sanjeevijesh.website"
+      "source": "/skillsyncAi/:path*",
+      "destination": "https://skill-sync-ai-sanjeev.vercel.app/:path*"
     }
   ]
 }
