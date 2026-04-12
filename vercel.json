@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/skillsyncAi",
+      "destination": "https://skill-sync-ai-sanjeev.vercel.app",
+      "permanent": false
+    }
+  ]
+}
