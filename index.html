@@ -176,6 +176,9 @@
         .nl a.act::after, .nl a:hover::after { transform: scaleX(1); }
         .nav-cta { font-family: var(--mono); font-size: .55rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(200,169,110,.28); padding: 9px 20px; border-radius: 1px; text-decoration: none; transition: all .25s; cursor: none; }
         .nav-cta:hover { background: var(--accent); color: var(--ink); }
+        .ns { display: flex; gap: 18px; align-items: center; margin-right: 12px; }
+        .ns a { color: rgba(240,236,226,.32); font-size: 1.05rem; transition: color .2s; cursor: none; }
+        .ns a:hover { color: var(--accent); }
         #hb { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: none; padding: 4px; }
         #hb span { width: 22px; height: 1.5px; background: rgba(240,236,226,.5); display: block; border-radius: 1px; transition: all .3s; }
         #mob { display: none; position: fixed; inset: 0; z-index: 490; background: rgba(11,14,20,.98); flex-direction: column; align-items: center; justify-content: center; gap: 3rem; }
@@ -322,7 +325,7 @@
         .d1{transition-delay:.1s}.d2{transition-delay:.22s}.d3{transition-delay:.34s}.d4{transition-delay:.46s}
         .sec-div { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,169,110,.14), transparent); }
         @media (max-width: 1024px) { .hi { grid-template-columns: 1fr; } .hero-card { display: none; } .abl, .cly { grid-template-columns: 1fr; gap: 3rem; } .skl-grid { grid-template-columns: repeat(2, 1fr); } .proj-grid { grid-template-columns: 1fr; } }
-        @media (max-width: 768px) { nav { padding: 0 1.5rem; } .nl, .nav-cta { display: none; } #hb { display: flex; } .si { padding: 100px 1.5rem 70px; } .hi { padding: 80px 1.5rem 0; } footer { padding: 1.8rem 1.5rem; } .skl-grid { grid-template-columns: 1fr; } #cur, #cur-ring { display: none; } body { cursor: auto; } a, button { cursor: pointer; } .sh { left: 1.5rem; } }
+        @media (max-width: 768px) { nav { padding: 0 1.5rem; } .nl, .nav-cta, .ns { display: none; } #hb { display: flex; } .si { padding: 100px 1.5rem 70px; } .hi { padding: 80px 1.5rem 0; } footer { padding: 1.8rem 1.5rem; } .skl-grid { grid-template-columns: 1fr; } #cur, #cur-ring { display: none; } body { cursor: auto; } a, button { cursor: pointer; } .sh { left: 1.5rem; } }
     </style>
 </head>
 <body>
@@ -346,6 +349,11 @@
             <li><a href="#contact">Contact</a></li>
         </ul>
         <div style="display:flex;align-items:center;gap:12px;">
+            <div class="ns">
+                <a href="https://github.com/sanjeevijesh" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+                <a href="mailto:sanjeevijesh@gmail.com" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+                <a href="https://www.linkedin.com/in/sanjeev-vijesh-0566a428a" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+            </div>
             <a href="#contact" class="nav-cta">Hire Me</a>
             <button id="hb" aria-label="Toggle mobile menu" aria-expanded="false"><span></span><span></span><span></span></button>
         </div>
@@ -455,8 +463,8 @@
             <p class="sec-eye rv">Selected work</p>
             <h2 id="projects-heading" class="st rv d1">Projects that<br><em>speak for themselves</em></h2>
             <div class="proj-grid rv d2">
-                <a class="pc" href="https://skill-sync-ai-sanjeev.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="SkillSync AI — AI-powered skill assessment platform (opens in new tab)"><span class="pc-num">01</span><div class="pc-top"><h3>SkillSync AI</h3><i class="fas fa-arrow-up-right-from-square pc-arrow" aria-hidden="true"></i></div><p>AI-powered skill assessment platform that generates personalised learning paths based on proficiency gaps and career objectives.</p><div class="pc-tags"><span class="ptag">AI/ML</span><span class="ptag">React</span><span class="ptag">Vercel</span></div></a>
-                <a class="pc" href="https://home-rental-app-ivory.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Home Rental App — Full-stack rental property platform (opens in new tab)"><span class="pc-num">02</span><div class="pc-top"><h3>Home Rental App</h3><i class="fas fa-arrow-up-right-from-square pc-arrow" aria-hidden="true"></i></div><p>Full-stack rental property platform with real-time listing management, availability tracking, and seamless booking workflows.</p><div class="pc-tags"><span class="ptag">Full-Stack</span><span class="ptag">MongoDB</span><span class="ptag">Node.js</span></div></a>
+                <a class="pc" href="https://skillsync.sanjeevijesh.website/" target="_blank" rel="noopener noreferrer" aria-label="SkillSync AI — AI-powered skill assessment platform (opens in new tab)"><span class="pc-num">01</span><div class="pc-top"><h3>SkillSync AI</h3><i class="fas fa-arrow-up-right-from-square pc-arrow" aria-hidden="true"></i></div><p>AI-powered skill assessment platform that generates personalised learning paths based on proficiency gaps and career objectives.</p><div class="pc-tags"><span class="ptag">AI/ML</span><span class="ptag">React</span><span class="ptag">Vercel</span></div></a>
+                <a class="pc" href="https://www.sanjeevijesh.website/" target="_blank" rel="noopener noreferrer" aria-label="Home Rental App — Full-stack rental property platform (opens in new tab)"><span class="pc-num">02</span><div class="pc-top"><h3>Home Rental App</h3><i class="fas fa-arrow-up-right-from-square pc-arrow" aria-hidden="true"></i></div><p>Full-stack rental property platform with real-time listing management, availability tracking, and seamless booking workflows.</p><div class="pc-tags"><span class="ptag">Full-Stack</span><span class="ptag">MongoDB</span><span class="ptag">Node.js</span></div></a>
                 <div class="pc" role="article" aria-label="FitTrack — Coming soon"><span class="pc-status">Coming Soon</span><span class="pc-num">03</span><div class="pc-top"><h3>FitTrack</h3></div><p>Cross-platform fitness tracking application with workout logging, interactive progress charts, and performance analytics.</p><div class="pc-tags"><span class="ptag">Mobile</span><span class="ptag">Flutter</span><span class="ptag">Dart</span></div></div>
                 <a class="pc" href="https://reelsmaker.sanjeevijesh.website/" target="_blank" rel="noopener noreferrer" aria-label="ReelMaker AI — AI-powered content generation SaaS (opens in new tab)"><span class="pc-num">04</span><div class="pc-top"><h3>ReelMaker AI</h3><i class="fas fa-arrow-up-right-from-square pc-arrow" aria-hidden="true"></i></div><p>AI-powered content generation SaaS platform designed specifically for Indian local businesses.</p><div class="pc-tags"><span class="ptag">Next.js</span><span class="ptag">Supabase</span><span class="ptag">AI</span></div></a>
             </div>
